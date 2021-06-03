@@ -18,7 +18,6 @@ const Recommendations: FC = () => {
       <Box
         padding="10px"
         borderColor="blackAlpha.300"
-        // boxShadow="lg"
         width="90vw"
         height="35vh"
         borderWidth="1px"

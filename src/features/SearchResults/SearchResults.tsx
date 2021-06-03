@@ -1,6 +1,6 @@
 import { IconButton } from "@chakra-ui/button";
 import { CloseIcon } from "@chakra-ui/icons";
-import { Box, VStack } from "@chakra-ui/layout";
+import { VStack } from "@chakra-ui/layout";
 
 import {
   Drawer,
@@ -35,12 +35,6 @@ const SearchResults: FC = () => {
     isOpen: openValue,
   });
 
-  console.log("3", results);
-
-  // let transformation: string = isOpen
-  //   ? "translateX(60vw)"
-  //   : "translateX(200vw)";
-
   const dispatch = useAppDispatch();
   const closeResultsHandler = () => {
     dispatch(closeResults());
@@ -69,27 +63,3 @@ const SearchResults: FC = () => {
 };
 
 export default SearchResults;
-
-/*
-<Box
-      h="95vh"
-      w="40vw"
-      bg="gray.200"
-      transform={transformation}
-      zIndex="500"
-      position="absolute"
-    >
-      <VStack paddingTop="15px" spacing="20px">
-        <IconButton
-          aria-label="close search"
-          icon={<CloseIcon />}
-          alignSelf="flex-end"
-          zIndex="600"
-          boxShadow="sm"
-          position="absolute"
-          onClick={closeResultsHandler}
-        />
-        {resultArray}
-      </VStack>
-    </Box>
-*/

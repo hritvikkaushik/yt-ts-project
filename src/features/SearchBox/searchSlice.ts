@@ -22,7 +22,6 @@ export const getSearchResults = createAsyncThunk(
   "search/getSearchResults",
   async (query: string) => {
     query.replace(" ", "+");
-    // const response = await fakeAPICall(query);
     const response = axiosYT.get("/search", {
       params: { q: query, type: "video", maxResults: 10 },
     });
@@ -35,15 +34,12 @@ export const searchBoxSlice = createSlice({
   initialState,
   reducers: {
     moveToTop: (state) => {
-      console.log("movetotop");
       state.atTop = true;
     },
     moveToCenter: (state) => {
-      console.log("movetocenter");
       state.atTop = false;
     },
     closeResults: (state) => {
-      console.log("closeResults");
       state.open = false;
     },
   },

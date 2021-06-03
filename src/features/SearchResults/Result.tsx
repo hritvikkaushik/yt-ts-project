@@ -1,5 +1,4 @@
 import { Box, HStack } from "@chakra-ui/layout";
-// import { Skeleton, SkeletonText } from "@chakra-ui/skeleton";
 import { FC } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { getRelated, selectVideo } from "../VideoAndRec/videoSlice";
@@ -16,11 +15,8 @@ const Result: FC<ResultProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const selectVideoHandler = () => {
-    console.log("1 selectVideoHandler", props.id);
-
     dispatch(getRelated(props.id));
     dispatch(moveToTop());
-    console.log("2");
     dispatch(selectVideo(props.id));
   };
 

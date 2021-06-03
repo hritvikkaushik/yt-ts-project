@@ -35,7 +35,6 @@ const RelatedVideo: FC<RelatedVideoProps> = (props) => {
         width="100%"
       />
       <p>{props.item.snippet.title}</p>
-      {/* <p>{props.item.snippet.description}</p> */}
     </Box>
   );
 };
