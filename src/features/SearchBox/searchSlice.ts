@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import axiosYT from "../../axios/axiosYT";
-// import { RootState } from "../../app/store";
 
 export interface SearchBoxState {
-  reducedWidth: boolean;
   atTop: boolean;
   status: "idle" | "loading" | "failed";
   open: boolean;
@@ -13,7 +11,6 @@ export interface SearchBoxState {
 }
 
 const initialState: SearchBoxState = {
-  reducedWidth: false,
   atTop: false,
   status: "idle",
   query: null,
@@ -26,9 +23,9 @@ export const getSearchResults = createAsyncThunk(
   async (query: string) => {
     query.replace(" ", "+");
     // const response = await fakeAPICall(query);
-    const response = axiosYT.get("/search", { params: { q: query } });
-    // console.log(response);
-    //Value returned here becomes 'fulfilled' action payload
+    const response = axiosYT.get("/search", {
+      params: { q: query, type: "video", maxResults: 10 },
+    });
     return response;
   }
 );
@@ -37,14 +34,6 @@ export const searchBoxSlice = createSlice({
   name: "searchBox",
   initialState,
   reducers: {
-    reduceWidth: (state) => {
-      console.log("reducewidth");
-      state.reducedWidth = true;
-    },
-    extendWidth: (state) => {
-      console.log("extendwidth");
-      state.reducedWidth = false;
-    },
     moveToTop: (state) => {
       console.log("movetotop");
       state.atTop = true;
@@ -67,17 +56,10 @@ export const searchBoxSlice = createSlice({
         state.status = "idle";
         state.open = true;
         state.response = action.payload;
-        // console.log(action);
       });
   },
 });
 
-export const {
-  reduceWidth,
-  extendWidth,
-  moveToCenter,
-  moveToTop,
-  closeResults,
-} = searchBoxSlice.actions;
+export const { moveToCenter, moveToTop, closeResults } = searchBoxSlice.actions;
 
 export default searchBoxSlice.reducer;

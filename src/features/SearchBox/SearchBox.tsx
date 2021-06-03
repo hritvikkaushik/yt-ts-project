@@ -1,22 +1,17 @@
 import { IconButton } from "@chakra-ui/button";
 import { SearchIcon } from "@chakra-ui/icons";
 import { Input } from "@chakra-ui/input";
+import { HStack } from "@chakra-ui/layout";
 import React, { FC, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getSearchResults, reduceWidth } from "./searchBoxSlice";
-
-// import axiosYT from "../../axios/axiosYT";
+import { useAppDispatch } from "../../app/hooks";
+import { getSearchResults } from "./searchSlice";
 
 const SearchBox: FC = () => {
-  const isWidthReduced = useAppSelector(
-    (state) => state.searchBox.reducedWidth
-  );
   const dispatch = useAppDispatch();
 
   const [text, setText] = useState("");
 
   const onSearch = () => {
-    dispatch(reduceWidth());
     dispatch(getSearchResults(text));
   };
 
@@ -24,13 +19,20 @@ const SearchBox: FC = () => {
     setText(event.currentTarget.value);
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      onSearch();
+    }
+  };
+
   return (
-    <>
+    <HStack>
       <Input
         placeholder="Enter search query"
-        w={isWidthReduced ? 200 : 400}
+        w="50vw"
         value={text}
         onChange={changeHandler}
+        onKeyPress={handleKeyPress}
       />
       <IconButton
         aria-label="Search"
@@ -38,7 +40,7 @@ const SearchBox: FC = () => {
         type="submit"
         onClick={onSearch}
       />
-    </>
+    </HStack>
   );
 };
 

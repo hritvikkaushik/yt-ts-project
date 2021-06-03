@@ -4,6 +4,8 @@ import { FC } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { getRelated, selectVideo } from "../VideoAndRec/videoSlice";
 import { searchItem } from "../../app/types";
+import styles from "./SearchResults.module.css";
+import { moveToTop } from "../SearchBox/searchSlice";
 
 type ResultProps = {
   id: string;
@@ -11,29 +13,39 @@ type ResultProps = {
 };
 
 const Result: FC<ResultProps> = (props) => {
-  const videoDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const selectVideoHandler = () => {
     console.log("1 selectVideoHandler", props.id);
 
-    videoDispatch(getRelated(props.id));
-
+    dispatch(getRelated(props.id));
+    dispatch(moveToTop());
     console.log("2");
-    videoDispatch(selectVideo(props.id));
+    dispatch(selectVideo(props.id));
   };
 
   return (
-    <Box h="120px" w="450px" bg="gray.200" overflow="hidden">
+    <Box
+      borderWidth="1px"
+      borderColor="blackAlpha.300"
+      boxShadow="md"
+      bgColor="white"
+      padding="10px"
+      overflow="hidden"
+      className={styles.VideoCard}
+    >
       <HStack>
         <img
           src={props.item.snippet.thumbnails.default.url}
           alt="video thumbnail"
-          width="120px"
-          height="90px"
+          width="200px"
+          height="130px"
         />
 
         <div>
-          <h2 onClick={selectVideoHandler}>{props.item.snippet.title}</h2>
+          <h2 style={{ fontWeight: "bold" }} onClick={selectVideoHandler}>
+            {props.item.snippet.title}
+          </h2>
           <p style={{ textAlign: "left" }}>{props.item.snippet.description}</p>
         </div>
       </HStack>

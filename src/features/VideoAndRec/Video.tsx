@@ -5,7 +5,13 @@ import { useAppSelector } from "../../app/hooks";
 const VideoPlayer: FC = () => {
   const videoId = useAppSelector((state) => state.video.videoId);
 
-  return <YouTube videoId={videoId} />;
+  const opts = {
+    height: "480px",
+    width: "800px",
+  };
+
+  if (videoId) return <YouTube opts={opts} videoId={videoId} />;
+  else return <div></div>;
 };
 
 export default VideoPlayer;
